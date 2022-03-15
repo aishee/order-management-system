@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>order-management-system</artifactId>
+        <groupId>com.walmart.ukgr.oms</groupId>
+        <version>0.0.419-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>order-management-system-app</artifactId>
+    <name>order-management-system-app</name>
+    <packaging>jar</packaging>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jacoco.percentage.line>1.0</jacoco.percentage.line>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.walmart.ukgr.oms</groupId>
+            <artifactId>primary-ports-adapters</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock-jre8</artifactId>
+            <version>2.25.1</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin
+                </artifactId> <!-- surefire plugin version managed by Spring Boot -->
+                <configuration>
+                    <profiles>
+                        <profile>local</profile>
+                    </profiles>
+                    <fork>true</fork>
+                    <skip>false</skip>
+                    <jvmArguments>
+                        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000
+                        -DloggerName=console-async
+                        -DloggerLocation=./log
+                        -Druntime.context.appName=order-management-system
+                        -Druntime.context.system.property.override.enabled=true
+                        -Druntime.context.environmentType=local
+                        -Druntime.context.environment=local
+                        -DloggerName=console-async
+                        -DloggerLocation=./log
+                    </jvmArguments>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                            <goal>build-info</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

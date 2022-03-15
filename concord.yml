@@ -1,0 +1,179 @@
+imports:
+  - git:
+      url: "git@gecgithub01.walmart.com:ukgr/CICD.git"
+      secret:
+        org: "ASDA"
+        name: "concord_cicd"
+  - git:
+      url: "https://gecgithub01.walmart.com/intl-ecomm-svcs/api-linter-svc.git"
+
+configuration:
+  # list of concord "plugins"
+  dependencies:
+    - "mvn://com.walmartlabs.concord.plugins:oneops-tasks:1.13.0"
+    - "mvn://com.walmartlabs.concord.plugins:looper-task:1.25.0"
+    - "mvn://com.walmartlabs.concord.plugins.basic:smtp-tasks:1.12.0"
+    - "mvn://com.walmartlabs.concord.plugins:git:1.3.0"
+    - "mvn://com.walmartlabs.concord.plugins:automaton-task:1.26.1"
+    - "mvn://com.walmartlabs.concord.plugins.basic:smtp-tasks:1.12.0"
+
+  arguments:
+    looperJobName: "/Build_and_Deploy/job/ukgr_order-management-system/"
+    looperJobNameQAjob: "/job/ODS/job/FMS%20Validation/"
+    looperQAjobCall: "FMS_Sanity"
+    runID: ${datetime.current('yyyy-MM-dd_HH-mm-ss')}
+    slackChannel: "ukgr-oms"
+    perfTestProjectName: ### ie. "asda-iro-service-price-team" ###
+    perfTestGitURL: ### ie. "https://gecgithub01.walmart.com/ggeorg1/iro-service-performance-price.git" ###
+    perfTestFlow: ### ie. "stg-price-service" ###
+    perfTestUser: ### ie. "ggeorg1" ###
+    env: default
+    emailApproval: ### ie. "ggeorge@walmartlabs.com" ###
+    harnessWebhookURL: "http://asda-harness.prod.walmart.net/api/webhooks/Yad2zPLtYesvmYFn8xnq2N4irTvafac810KPVz2R"
+    harnessAppID: "f1ZMDye5Q8eTEluHkvz9Aw"
+    harnessService01: "asda-oms-platform"
+    harnessService02: ### ie. "consumer-app-platform" ###
+    RRservicename: ukgr-oms
+    RRserviceversion: 1
+    looperUserName: "svcasdagr"
+    looperApiToken: "65017adad76de9d2db0400ee9803c6b8"
+    looperQAUserName: "SVC_asda_qe_internal"
+    looperQAApiToken: "11de288eb27f137c53ac20719ab8dc3ad4"
+
+triggers:
+  - github:
+      version: 2
+      useInitiator: true
+      entryPoint: default
+      conditions:
+        type: push
+        branch: main
+        sender: '^(?!.*(jenkinspan|SVC-Looper)).*$'
+
+flows:
+  default:
+    - task: looper
+      in:
+        username: ${looperUserName}
+        apiToken: ${looperApiToken}
+        jobName: ${looperJobName}
+        call: harnesspipeline
+        sync: true
+    - log: "Build #${looperJob.build} - ${looperJob.status}"
+    - set:
+        LooperBuildUrl: "https://ci.walmart.com/job/${looperJobName}/${looperJob.build}"
+    - checkpoint: "DeployInHarness"
+    - if: ${looperJob.status == "SUCCESS"}
+      then:
+        - set:
+            buildVersion: ${looperJob.envs.deployVersion}
+        - log: "Looper Build is success moving to deploy step"
+        - log: "Harness deploy initiating"
+        - call: slackBuildSuccess
+        - call: harnessDeploy
+      else:
+        - log: "Build ${looperJob.status}.Please check here for the logs https://ci.walmart.com/job/${looperJobName}/${looperJob.build}/console"
+        - call: slackBuildFailure
+        - throw: "Looper build failed with status ${looperJob.status}"
+
+  ### Harness Webhook for Pipeline Deployment - Arguments FILLED IN BY PLATFORM ENGINEERING ###
+  harnessDeploy:
+    - try:
+        - task: http
+          in:
+            url: ${harnessWebhookURL}
+            request: json
+            response: json
+            method: POST
+            body:
+              application: '${harnessAppID}'
+              artifacts:
+                - service: '${harnessService01}'
+                  buildNumber: '${buildVersion}'
+            out: response
+        - if: ${response.success}
+          then:
+            - call: slackHarnessTriggerSuccess
+            - log: "Deployment started: ${response.content}"
+          else:
+            - call: slackHarnessTriggerFailure
+            - log: "Uh oh. Error starting deployment"
+      error:
+        - call: slackHarnessTriggerFailure
+        - log: "Uh oh. Error starting deployment"
+        - throw: ${lastError}
+
+  ### QA E2E Test ###
+  qaAutomationJob:
+    - call: slackQaAutomation
+    - set:
+        FQDNTOTEST: "${QAFQDN}"
+    - task: looper
+      in:
+        baseUrl: "https://ci.falcon.walmart.com"
+        username: ${looperQAUserName}
+        apiToken: ${looperQAApiToken}
+        jobName: ${looperJobNameQAjob}
+        call: ${looperQAjobCall}
+        parameters:
+          apienv: pqa
+          testrunid: ${runID}
+          instanceurl: ${FQDNTOTEST}
+        sync: true
+    - log: "**Build #${looperJob.build} - ${looperJob.status}. TestRunID is ${runID} **"
+    - if: ${looperJob.status == "SUCCESS"}
+      then:
+        - log: "QA Automation is SUCCESSFUL"
+        - call: slackQaAutomationResponse
+      else:
+        - log: 'QA Automation has FAILED'
+        - call: slackQaAutomationResponse
+        - throw: ${lastError}
+
+  slackBuildSuccess:
+    - task: slack
+      in:
+        channelId: ${slackChannel}
+        text: " :large_green_spear: Looper Build #${looperJob.build}: *${looperJob.status}*. Deploy Version Build: *${buildVersion}*"
+        iconEmoji: ":concord:"
+    - log: "Slack message sent to the team about build successful in Looper"
+
+  slackBuildFailure:
+    - task: slack
+      in:
+        channelId: ${slackChannel}
+        text: " :red_circle: Build #${looperJob.build} *${looperJob.status}* \n      - Please check here for looper logs :  ${looperJob.url}console"
+        iconEmoji: ":concord:"
+    - log: "Slack message sent to the team about build failure in Looper"
+
+  slackHarnessTriggerSuccess:
+    - task: slack
+      in:
+        channelId: ${slackChannel}
+        text: " :working-on-it: Harness Deployment for artifact version ${buildVersion} executed, deployment in progress..."
+        iconEmoji: ":concord:"
+    - log: "Slack message sent to the team about Harness Deployment trigger SUCCESS"
+
+  slackHarnessTriggerFailure:
+    - task: slack
+      in:
+        channelId: ${slackChannel}
+        text: " :red_circle: Deployment for artifact version ${buildVersion} FAILED to execute, please check Harness configuration"
+        iconEmoji: ":concord:"
+    - log: "Slack message sent to the team about Harness Deployment trigger FAILURE"
+
+  slackQaAutomation:
+    - task: slack
+      in:
+        channelId: ${slackChannel}
+        text: " :automaton-logo: QA E2E Automation job started : https://ci.falcon.walmart.com/job/ODS/job/FMS%20Validation/"
+        iconEmoji: ":concord:"
+    - log: "Slack message sent to the team QA Automation job started"
+
+  slackQaAutomationResponse:
+    - task: slack
+      in:
+        channelId: ${slackChannel}
+        text: " :automaton-logo: QA Automation job status: *${looperJob.status}* . Find testing details in Hi-chart report link - ENV::PQA::UK ASDA FMS_Sanity Regression slack update "
+        iconEmoji: ":concord:"
+    - log: "Slack message sent to the team about QA Automation job status: ${looperJob.status}"

@@ -1,0 +1,25 @@
+groups:
+  - name: order-management-system-app-alerts
+    rules:
+      # SLB Status of an application is less 45%.
+      - alert: Qa-order-management-service-app Application SLB Status lower than 45%.
+        annotations:
+          summary: "OMSAPP SLB Status lower than 45% for order-management-service-app.prod.ukgr-oms.ukgrsps.prod.us.walmart.net"
+        expr: (sort((avg(heka_datastore_check_status{origin=~"(?i:(order-management-service-app.prod.ukgr-oms.ukgrsps.qa.us.walmart.net))"}) by (origin))*100) > 0) < 45
+        for: 3m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-prod-alerts
+          mms_xmatters_group: IEC-UK-GR-ENG-FMS
+
+      - alert: QA-omsapp - application LB are responding with more than 24(Other than 200 statuses)/min on average
+        annotations:
+          message: OMS APIs are responding with more than 1 exception(500 statuses)/min on average
+        expr: topk(100, sum by(statusCode) (rate(odnd_http_response_code_total{mms_source="ef", origcfg_host=~"(?i:(order-management-service-app.qa.ukgr-oms.ukgrsps.prod.us.walmart.net))",statusCode!="200"}[2m]))) > 0.04
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-prod-alerts
+          mms_xmatters_group: IEC-UK-GR-ENG-FMS

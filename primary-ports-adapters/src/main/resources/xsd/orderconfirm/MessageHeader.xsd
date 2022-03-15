@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xml="http://www.w3.org/XML/1998/namespace"
+   elementFormDefault="qualified" attributeFormDefault="qualified" targetNamespace="http://www.xmlns.walmartstores.com/Header/datatypes/MessageHeader/1.4/"
+   xmlns:hdr="http://www.xmlns.walmartstores.com/Header/datatypes/MessageHeader/1.4/"
+   version="2.5" xmlns:pfx="http://www.xmlns.walmartstores.com/SupplyChain/CustomerOrderManagement/datatypes/UpdateOrderFulfillmentStatus/updateOrderFulfillmentBeginStatus/"
+   xmlns:flt="http://www.xmlns.walmartstores.com/Fault/datatypes/MessageFault/1.0/">
+  <xsd:import namespace="http://www.xmlns.walmartstores.com/SupplyChain/CustomerOrderManagement/datatypes/UpdateOrderFulfillmentStatus/updateOrderFulfillmentBeginStatus/"
+     schemaLocation="UpdateOrderFulfillmentStatus_Begin.xsd"/>
+  <xsd:element name="MessageHeader" type="hdr:MessageHeader"/>
+  <xsd:complexType name="MessageHeader">
+    <xsd:sequence>
+      <xsd:element name="SubId" type="pfx:alpha255"/>
+      <xsd:element name="CnsmrId" type="pfx:alpha255"/>
+      <xsd:element name="SrvcNm" type="pfx:alpha255"/>
+      <xsd:element name="AppId" type="pfx:alpha255" minOccurs="0"/>
+      <xsd:element name="TranId" type="pfx:alpha255" minOccurs="0"/>
+      <xsd:element name="UsrNm" type="pfx:alpha255" minOccurs="0"/>
+      <xsd:element name="Pwd" type="pfx:alpha255" minOccurs="0"/>
+      <xsd:element name="SrcSysId" type="pfx:alpha255" minOccurs="0"/>
+      <xsd:element name="Version" type="pfx:alpha255"/>
+      <xsd:element name="ConfCd" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="pfx:alpha255">
+            <xsd:enumeration value="Always"/>
+            <xsd:enumeration value="ConfirmOnArrival"/>
+            <xsd:enumeration value="ConfirmOnDelivery"/>
+            <xsd:enumeration value="None"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

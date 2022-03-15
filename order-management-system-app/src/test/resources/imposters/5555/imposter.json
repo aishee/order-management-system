@@ -1,0 +1,24 @@
+{
+  "port": 5555,
+  "protocol": "http",
+  "name": "iroservice",
+  "stubs": [
+    {
+      "meta": {
+        "dir": "stubs/1603400752595-21-5"
+      },
+      "predicates": [
+        {
+          "deepEquals": {
+            "body": "{\"item_ids\":[\"419072\"],\"item_id_type\":\"CIN\",\"store_id\":\"1234\",\"ship_on_date\":\"2020-10-22\",\"consumer_contract\":\"ods_store_item\",\"request_origin\":\"iroRequestOrigin\"}"
+          }
+        }
+      ]
+    },
+    {
+      "meta": {
+        "dir": "stubs/1603400726760-21-3"
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "is": {
+    "statusCode": 200,
+    "headers": {
+      "Vary": "Accept-Encoding",
+      "item-cache": "true",
+      "Content-Type": "application/json;charset=UTF-8",
+      "Transfer-Encoding": "chunked",
+      "Date": "Thu, 22 Oct 2020 21:05:52 GMT"
+    },
+    "body": "{\"data\":{\"uber_item\":{\"items\":[{\"item_id\":\"419072\",\"is_bundle\":false,\"item\":{\"sku_id\":\"399016\",\"cin\":\"419072\",\"upc_numbers\":[\"5740900805408\"],\"brand\":\"Lurpak\",\"item_name\":\"Slightly Salted Spreadable\",\"name\":\"Lurpak Slightly Salted Spreadable\",\"picker_desc\":\"Lurpak Slightly Salted Spreadable Butter 500G\",\"sales_unit\":\"Each\",\"images\":{\"scene7_id\":\"5740900805408\",\"scene7_host\":\"https://ui.assets-asda.com:443/dm/\"},\"untraited_stores\":[\"4271\",\"6991\",\"4233\",\"6920\",\"6964\",\"7998\",\"6864\",\"7997\",\"9911\",\"4425\",\"6866\",\"7999\",\"4308\",\"7990\",\"7992\",\"7991\",\"7994\",\"4441\",\"4463\",\"7993\",\"9998\",\"6863\",\"7996\",\"6983\",\"7995\",\"8445\",\"6938\",\"4213\",\"4774\",\"6974\",\"6911\",\"7989\",\"6954\",\"7988\"],\"freshness_info\":{\"min_ideal_day_value\":0,\"max_ideal_day_value\":0,\"is_sell_by_date_required\":false},\"extended_item_info\":{\"weight\":\"500g\",\"replenish_unit_indicator\":\"N\"}},\"price\":null,\"promotion_info\":[{\"rollback\":null}]}],\"overall_invalid_items\":{\"invalid_items\":[],\"invalid_prices\":[\"419072\"]}}}}",
+    "_mode": "text",
+    "_proxyResponseTime": 534
+  }
+}

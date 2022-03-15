@@ -1,0 +1,35 @@
+#Eclips Paths
+.classpath
+.project
+.settings/
+bin/
+.mvn
+
+#IntelliJ Idea Paths
+.idea/
+*.iml
+*.uml
+*.iws
+atlassia*
+out/
+
+#Maven Paths
+log/
+build/
+*build*
+*target*
+*.log
+
+#Java File Extensions
+*.class
+*.jar
+*.war
+*.ear
+
+#Spring Boot
+.mvn
+mvnw
+mvnw.cmd
+
+#Mac related
+*.DS_STORE*

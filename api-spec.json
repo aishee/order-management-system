@@ -1,0 +1,1285 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "ASDA IMP API",
+    "version" : "v1",
+    "title" : "ASDA IMP API",
+    "contact" : {
+      "name" : "ASDA IDC FMS",
+      "email" : "IEC-UKGR-FMS@email.wal-mart.com"
+    }
+  },
+  "paths" : {
+    "/fulfillment/orders/{sourceOrderId}" : {
+      "get" : {
+        "operationId" : "getOrder",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "sourceOrderId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "WM_TENANT_ID",
+          "in" : "header",
+          "required" : true,
+          "type" : "string",
+          "enum" : [ "ASDA", "DEFAULT" ]
+        }, {
+          "name" : "WM_VERTICAL_ID",
+          "in" : "header",
+          "required" : true,
+          "type" : "string",
+          "enum" : [ "MARKETPLACE", "ASDAGR", "DEFAULTGM", "DEFAULTGR", "DEFAULTMARKETPLACE" ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FmsOrderResponse"
+            }
+          }
+        }
+      }
+    },
+    "/marketplace/orders" : {
+      "post" : {
+        "operationId" : "createOrder",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CreateMarketPlaceOrderRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/MarketPlaceOrderResponse"
+            }
+          }
+        }
+      }
+    },
+    "/marketplace/orders/{vendor-order-id}" : {
+      "get" : {
+        "operationId" : "getOrder",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "vendor-order-id",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/MarketPlaceOrderResponse"
+            }
+          }
+        }
+      }
+    },
+    "/marketplace/uber/webhook" : {
+      "post" : {
+        "operationId" : "uberWebHook",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/UberWebHookRequest"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/marketplace_reports/{vendor_id}/{report_type}/{day_to_start}/{day_to_end}" : {
+      "post" : {
+        "operationId" : "invokeMarketPlaceReport",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "vendor_id",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "enum" : [ "UBEREATS", "JUSTEAT", "TESTVENDOR" ]
+        }, {
+          "name" : "report_type",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "enum" : [ "PAYMENT_DETAILS_REPORT", "ORDER_ERRORS_MENU_ITEM_REPORT", "ORDER_ERRORS_TRANSACTION_REPORT", "ORDER_HISTORY_REPORT", "DOWNTIME_REPORT", "CUSTOMER_AND_DELIVERY_FEEDBACK_REPORT", "MENU_ITEM_FEEDBACK_REPORT", "ORDERS_AND_ITEMS_REPORT", "FINANCE_SUMMARY_REPORT" ]
+        }, {
+          "name" : "day_to_start",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "day_to_end",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          "202" : {
+            "description" : ""
+          }
+        }
+      }
+    },
+    "/oms/orders/republish-to-kafka-dwh" : {
+      "post" : {
+        "operationId" : "replayOmsOrderToKafkaDwhTopic",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/OmsOrderReplayRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/OmsOrderRepublishResponse"
+            }
+          },
+          "202" : {
+            "description" : ""
+          }
+        }
+      }
+    },
+    "/oms/orders/{source-order-id}" : {
+      "get" : {
+        "operationId" : "getOrder",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "source-order-id",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "WM_TENANT_ID",
+          "in" : "header",
+          "required" : true,
+          "type" : "string",
+          "enum" : [ "ASDA", "DEFAULT" ]
+        }, {
+          "name" : "WM_VERTICAL_ID",
+          "in" : "header",
+          "required" : true,
+          "type" : "string",
+          "enum" : [ "MARKETPLACE", "ASDAGR", "DEFAULTGM", "DEFAULTGR", "DEFAULTMARKETPLACE" ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/OmsOrderResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "CancellationDetails" : {
+      "type" : "object",
+      "properties" : {
+        "cancelled_reason_code" : {
+          "type" : "string"
+        },
+        "cancelled_by" : {
+          "type" : "string",
+          "enum" : [ "STORE", "VENDOR", "OMS" ]
+        },
+        "cancelled_reason_description" : {
+          "type" : "string"
+        }
+      }
+    },
+    "CreateMarketPlaceOrderRequest" : {
+      "type" : "object",
+      "properties" : {
+        "data" : {
+          "$ref" : "#/definitions/CreateMarketPlaceOrderRequestData"
+        }
+      }
+    },
+    "CreateMarketPlaceOrderRequestData" : {
+      "type" : "object",
+      "required" : [ "estimated_due_time", "first_name", "payment_info", "store_id", "vendor_id" ],
+      "properties" : {
+        "external_order_id" : {
+          "type" : "string"
+        },
+        "external_native_order_id" : {
+          "type" : "string"
+        },
+        "store_id" : {
+          "type" : "string"
+        },
+        "first_name" : {
+          "type" : "string"
+        },
+        "last_name" : {
+          "type" : "string"
+        },
+        "payment_info" : {
+          "$ref" : "#/definitions/PaymentInfo"
+        },
+        "source_modified_date" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "estimated_due_time" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "vendor_id" : {
+          "type" : "string",
+          "enum" : [ "UBEREATS", "JUSTEAT", "TESTVENDOR" ]
+        },
+        "items" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/MarketPlaceRequestItemData"
+          }
+        }
+      }
+    },
+    "FmsError" : {
+      "type" : "object",
+      "properties" : {
+        "error_code" : {
+          "type" : "string",
+          "enum" : [ "INVALID_REQUEST_EXCEPTION", "INTERNAL_SERVICE_EXCEPTION", "ITEM_ALREADY_EXISTS_EXCEPTION" ]
+        },
+        "error_message" : {
+          "type" : "string"
+        },
+        "code" : {
+          "type" : "string",
+          "enum" : [ "INVALID_REQUEST_EXCEPTION", "INTERNAL_SERVICE_EXCEPTION", "ITEM_ALREADY_EXISTS_EXCEPTION" ]
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "message" : {
+          "type" : "string"
+        }
+      }
+    },
+    "FmsOrderDto" : {
+      "type" : "object",
+      "required" : [ "address_info", "contact_info", "external_order_id", "pickup_location_id", "price_info", "retail_category", "store_id", "store_order_id", "vendor", "vendor_order_id" ],
+      "properties" : {
+        "retail_category" : {
+          "type" : "string"
+        },
+        "vendor" : {
+          "type" : "string",
+          "enum" : [ "UBEREATS", "JUSTEAT", "TESTVENDOR" ]
+        },
+        "external_order_id" : {
+          "type" : "string"
+        },
+        "vendor_order_id" : {
+          "type" : "string"
+        },
+        "store_order_id" : {
+          "type" : "string"
+        },
+        "store_id" : {
+          "type" : "string"
+        },
+        "pickup_location_id" : {
+          "type" : "string"
+        },
+        "delivery_date" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "fulfillment_order_status" : {
+          "type" : "string"
+        },
+        "order_status" : {
+          "type" : "string"
+        },
+        "web_order_total" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "pos_total" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "order_vatamount" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "delivery_instruction" : {
+          "type" : "string"
+        },
+        "auth_status" : {
+          "type" : "string"
+        },
+        "price_info" : {
+          "$ref" : "#/definitions/OrderPriceInfoDto"
+        },
+        "address_info" : {
+          "$ref" : "#/definitions/OrderAddressInfoDto"
+        },
+        "contact_info" : {
+          "$ref" : "#/definitions/OrderContactInfoDto"
+        },
+        "order_scheduling_info" : {
+          "$ref" : "#/definitions/OrderSchedulingInfoDto"
+        },
+        "order_timestamps" : {
+          "$ref" : "#/definitions/OrderTimestampsDto"
+        },
+        "fulfillment_items" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/FmsOrderItemDTO"
+          }
+        },
+        "cancel_details" : {
+          "$ref" : "#/definitions/CancellationDetails"
+        }
+      }
+    },
+    "FmsOrderItemDTO" : {
+      "type" : "object",
+      "required" : [ "item_id", "upcs" ],
+      "properties" : {
+        "item_id" : {
+          "type" : "string"
+        },
+        "consumer_item_number" : {
+          "type" : "string"
+        },
+        "unit_of_measurement" : {
+          "type" : "string"
+        },
+        "sales_unit" : {
+          "type" : "string"
+        },
+        "quantity" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "nil_pick_qty" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "min_ideal_day_value" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "max_ideal_day_value" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "weight" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "unit_price" : {
+          "type" : "number"
+        },
+        "image_url" : {
+          "type" : "string"
+        },
+        "picker_item_description" : {
+          "type" : "string"
+        },
+        "temperature_zone" : {
+          "type" : "string"
+        },
+        "picked_item" : {
+          "$ref" : "#/definitions/FmsPickedItemDTO"
+        },
+        "upcs" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/FmsOrderItemUpc"
+          }
+        },
+        "sellby_date_required" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "FmsOrderItemUpc" : {
+      "type" : "object",
+      "required" : [ "upc" ],
+      "properties" : {
+        "upc" : {
+          "type" : "string"
+        }
+      }
+    },
+    "FmsOrderResponse" : {
+      "type" : "object",
+      "properties" : {
+        "data" : {
+          "$ref" : "#/definitions/FmsOrderResponseData"
+        },
+        "errors" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/FmsError"
+          }
+        }
+      }
+    },
+    "FmsOrderResponseData" : {
+      "type" : "object",
+      "properties" : {
+        "order" : {
+          "$ref" : "#/definitions/FmsOrderDto"
+        }
+      }
+    },
+    "FmsPickedItemDTO" : {
+      "type" : "object",
+      "required" : [ "consumer_item_number" ],
+      "properties" : {
+        "department_id" : {
+          "type" : "string"
+        },
+        "consumer_item_number" : {
+          "type" : "string"
+        },
+        "walmart_item_number" : {
+          "type" : "string"
+        },
+        "quantity" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "weight" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "picked_item_description" : {
+          "type" : "string"
+        },
+        "sell_by_date" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "picked_by" : {
+          "type" : "string"
+        },
+        "unit_price" : {
+          "type" : "number"
+        },
+        "adjusted_price_ex_vat" : {
+          "type" : "number"
+        },
+        "adjusted_price" : {
+          "type" : "number"
+        },
+        "web_adjusted_price" : {
+          "type" : "number"
+        },
+        "vat_amount" : {
+          "type" : "number"
+        },
+        "picked_item_upcs" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/FmsPickedItemUpcDTO"
+          }
+        }
+      }
+    },
+    "FmsPickedItemUpcDTO" : {
+      "type" : "object",
+      "required" : [ "upc" ],
+      "properties" : {
+        "upc" : {
+          "type" : "string"
+        },
+        "unit_of_measurement" : {
+          "type" : "string"
+        },
+        "walmart_item_number" : {
+          "type" : "string"
+        },
+        "quantity" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "weight" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "store_unit_price" : {
+          "type" : "number"
+        }
+      }
+    },
+    "MarketPlaceError" : {
+      "type" : "object",
+      "properties" : {
+        "error_code" : {
+          "type" : "string",
+          "enum" : [ "INVALID_REQUEST_EXCEPTION", "INTERNAL_SERVICE_EXCEPTION", "ITEM_ALREADY_EXISTS_EXCEPTION" ]
+        },
+        "error_message" : {
+          "type" : "string"
+        },
+        "code" : {
+          "type" : "string",
+          "enum" : [ "INVALID_REQUEST_EXCEPTION", "INTERNAL_SERVICE_EXCEPTION", "ITEM_ALREADY_EXISTS_EXCEPTION" ]
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "message" : {
+          "type" : "string"
+        }
+      }
+    },
+    "MarketPlaceOrderResponse" : {
+      "type" : "object",
+      "properties" : {
+        "data" : {
+          "$ref" : "#/definitions/MarketPlaceOrderResponseData"
+        },
+        "errors" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/MarketPlaceError"
+          }
+        }
+      }
+    },
+    "MarketPlaceOrderResponseData" : {
+      "type" : "object",
+      "properties" : {
+        "market_place_order_id" : {
+          "type" : "string"
+        },
+        "external_order_id" : {
+          "type" : "string"
+        },
+        "store_id" : {
+          "type" : "string"
+        },
+        "vendor_store_id" : {
+          "type" : "string"
+        },
+        "order_status" : {
+          "type" : "string"
+        },
+        "first_name" : {
+          "type" : "string"
+        },
+        "last_name" : {
+          "type" : "string"
+        },
+        "payment_info" : {
+          "$ref" : "#/definitions/PaymentInfo"
+        },
+        "source_modified_date" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "estimated_due_time" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "vendor_id" : {
+          "type" : "string",
+          "enum" : [ "UBEREATS", "JUSTEAT", "TESTVENDOR" ]
+        },
+        "items" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/MarketPlaceResponseItemData"
+          }
+        }
+      }
+    },
+    "MarketPlaceRequestBundledItemData" : {
+      "type" : "object",
+      "properties" : {
+        "bundle_quantity" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "bundle_sku_id" : {
+          "type" : "string"
+        },
+        "bundle_instance_id" : {
+          "type" : "string"
+        },
+        "bundle_description" : {
+          "type" : "string"
+        },
+        "item_quantity" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      }
+    },
+    "MarketPlaceRequestItemData" : {
+      "type" : "object",
+      "required" : [ "external_item_id", "item_id", "item_type" ],
+      "properties" : {
+        "external_item_id" : {
+          "type" : "string"
+        },
+        "item_description" : {
+          "type" : "string"
+        },
+        "item_id" : {
+          "type" : "string"
+        },
+        "item_type" : {
+          "type" : "string"
+        },
+        "vendor_instance_id" : {
+          "type" : "string"
+        },
+        "quantity" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "unit_price" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "base_unit_price" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "total_price" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "base_total_price" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "bundled_items" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/MarketPlaceRequestBundledItemData"
+          }
+        }
+      }
+    },
+    "MarketPlaceResponseBundledItemData" : {
+      "type" : "object",
+      "properties" : {
+        "bundle_quantity" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "bundle_sku_id" : {
+          "type" : "string"
+        },
+        "bundle_instance_id" : {
+          "type" : "string"
+        },
+        "bundle_description" : {
+          "type" : "string"
+        }
+      }
+    },
+    "MarketPlaceResponseItemData" : {
+      "type" : "object",
+      "properties" : {
+        "external_item_id" : {
+          "type" : "string"
+        },
+        "item_description" : {
+          "type" : "string"
+        },
+        "item_id" : {
+          "type" : "string"
+        },
+        "item_type" : {
+          "type" : "string"
+        },
+        "vendor_instance_id" : {
+          "type" : "string"
+        },
+        "quantity" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "unit_price" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "base_unit_price" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "total_price" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "base_total_price" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "bundled_items" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/MarketPlaceResponseBundledItemData"
+          }
+        }
+      }
+    },
+    "Meta" : {
+      "type" : "object",
+      "properties" : {
+        "user_id" : {
+          "type" : "string"
+        },
+        "resource_id" : {
+          "type" : "string"
+        },
+        "status" : {
+          "type" : "string"
+        }
+      }
+    },
+    "OmsError" : {
+      "type" : "object",
+      "properties" : {
+        "error_code" : {
+          "type" : "string",
+          "enum" : [ "INVALID_REQUEST_EXCEPTION", "INTERNAL_SERVICE_EXCEPTION", "ITEM_ALREADY_EXISTS_EXCEPTION" ]
+        },
+        "error_message" : {
+          "type" : "string"
+        },
+        "code" : {
+          "type" : "string",
+          "enum" : [ "INVALID_REQUEST_EXCEPTION", "INTERNAL_SERVICE_EXCEPTION", "ITEM_ALREADY_EXISTS_EXCEPTION" ]
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "message" : {
+          "type" : "string"
+        }
+      }
+    },
+    "OmsOrderDto" : {
+      "type" : "object",
+      "required" : [ "date_of_delivery", "external_order_id", "order_addresses", "order_contact_info", "order_items", "order_price_info", "order_status", "pickup_location_id", "spoke_store_id", "store_id" ],
+      "properties" : {
+        "external_order_id" : {
+          "type" : "string"
+        },
+        "store_id" : {
+          "type" : "string"
+        },
+        "spoke_store_id" : {
+          "type" : "string"
+        },
+        "pickup_location_id" : {
+          "type" : "string"
+        },
+        "date_of_delivery" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "order_status" : {
+          "type" : "string"
+        },
+        "delivery_instruction" : {
+          "type" : "string"
+        },
+        "vendor" : {
+          "type" : "string",
+          "enum" : [ "UBEREATS", "JUSTEAT", "TESTVENDOR" ]
+        },
+        "vendor_order_id" : {
+          "type" : "string"
+        },
+        "order_price_info" : {
+          "$ref" : "#/definitions/OrderPriceInfoDto"
+        },
+        "order_addresses" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/OrderAddressInfoDto"
+          }
+        },
+        "order_contact_info" : {
+          "$ref" : "#/definitions/OrderContactInfoDto"
+        },
+        "order_scheduling_info" : {
+          "$ref" : "#/definitions/OrderSchedulingInfoDto"
+        },
+        "order_items" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/OmsOrderItemDTO"
+          }
+        },
+        "cancel_details" : {
+          "$ref" : "#/definitions/CancellationDetails"
+        }
+      }
+    },
+    "OmsOrderItemDTO" : {
+      "type" : "object",
+      "required" : [ "consumer_item_num", "sales_unit", "temperature_zone", "uom", "upcs", "vendor_total_price", "vendor_unit_price" ],
+      "properties" : {
+        "sku_id" : {
+          "type" : "string"
+        },
+        "item_description" : {
+          "type" : "string"
+        },
+        "quantity" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "weight" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "unit_price" : {
+          "type" : "number"
+        },
+        "temperature_zone" : {
+          "type" : "string"
+        },
+        "uom" : {
+          "type" : "string"
+        },
+        "sales_unit" : {
+          "type" : "string"
+        },
+        "image_url" : {
+          "type" : "string"
+        },
+        "consumer_item_num" : {
+          "type" : "string"
+        },
+        "upcs" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/OmsOrderItemUpc"
+          }
+        },
+        "vendor_unit_price" : {
+          "type" : "number"
+        },
+        "vendor_total_price" : {
+          "type" : "number"
+        },
+        "picked_item" : {
+          "$ref" : "#/definitions/PickedItemDto"
+        }
+      }
+    },
+    "OmsOrderItemUpc" : {
+      "type" : "object",
+      "required" : [ "upc" ],
+      "properties" : {
+        "upc" : {
+          "type" : "string"
+        }
+      }
+    },
+    "OmsOrderReplayRequest" : {
+      "type" : "object",
+      "required" : [ "create_end_date_time", "create_start_date_time" ],
+      "properties" : {
+        "create_start_date_time" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "create_end_date_time" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    },
+    "OmsOrderRepublishResponse" : {
+      "type" : "object",
+      "properties" : {
+        "message" : {
+          "type" : "string"
+        }
+      }
+    },
+    "OmsOrderResponse" : {
+      "type" : "object",
+      "properties" : {
+        "data" : {
+          "$ref" : "#/definitions/OmsOrderResponseData"
+        },
+        "errors" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/OmsError"
+          }
+        }
+      }
+    },
+    "OmsOrderResponseData" : {
+      "type" : "object",
+      "properties" : {
+        "order" : {
+          "$ref" : "#/definitions/OmsOrderDto"
+        }
+      }
+    },
+    "OrderAddressInfoDto" : {
+      "type" : "object",
+      "required" : [ "address_line_one", "address_three", "address_two", "address_type", "city", "country", "county", "latitude", "longitude", "postal_code", "state" ],
+      "properties" : {
+        "address_type" : {
+          "type" : "string"
+        },
+        "address_line_one" : {
+          "type" : "string"
+        },
+        "address_two" : {
+          "type" : "string"
+        },
+        "address_three" : {
+          "type" : "string"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "county" : {
+          "type" : "string"
+        },
+        "state" : {
+          "type" : "string"
+        },
+        "postal_code" : {
+          "type" : "string"
+        },
+        "country" : {
+          "type" : "string"
+        },
+        "latitude" : {
+          "type" : "string"
+        },
+        "longitude" : {
+          "type" : "string"
+        }
+      }
+    },
+    "OrderContactInfoDto" : {
+      "type" : "object",
+      "required" : [ "customer_id", "email", "first_name", "last_name" ],
+      "properties" : {
+        "customer_id" : {
+          "type" : "string"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "first_name" : {
+          "type" : "string"
+        },
+        "last_name" : {
+          "type" : "string"
+        },
+        "middle_name" : {
+          "type" : "string"
+        },
+        "phone_number_one" : {
+          "type" : "string"
+        },
+        "phone_number_two" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "mobile_number" : {
+          "type" : "string"
+        }
+      }
+    },
+    "OrderPriceInfoDto" : {
+      "type" : "object",
+      "required" : [ "web_order_total" ],
+      "properties" : {
+        "web_order_total" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "pos_total" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "order_vatamount" : {
+          "type" : "number",
+          "format" : "double"
+        }
+      }
+    },
+    "OrderSchedulingInfoDto" : {
+      "type" : "object",
+      "required" : [ "trip_id" ],
+      "properties" : {
+        "trip_id" : {
+          "type" : "string"
+        },
+        "door_step_time" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "van_id" : {
+          "type" : "string"
+        },
+        "schedule_number" : {
+          "type" : "string"
+        },
+        "order_due_time" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "slot_start_time" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "slot_end_time" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "load_number" : {
+          "type" : "string"
+        }
+      }
+    },
+    "OrderTimestampsDto" : {
+      "type" : "object",
+      "properties" : {
+        "picking_start_time" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "cancelled_time" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "pick_complete_time" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "ship_confirm_time" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "order_delivered_time" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "pickup_ready_time" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "pickup_time" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    },
+    "PaymentInfo" : {
+      "type" : "object",
+      "properties" : {
+        "total" : {
+          "type" : "number"
+        },
+        "sub_total" : {
+          "type" : "number"
+        },
+        "tax" : {
+          "type" : "number"
+        },
+        "total_fee" : {
+          "type" : "number"
+        },
+        "total_fee_tax" : {
+          "type" : "number"
+        },
+        "bag_fee" : {
+          "type" : "number"
+        }
+      }
+    },
+    "PickedItemDto" : {
+      "type" : "object",
+      "required" : [ "consumer_item_num" ],
+      "properties" : {
+        "department_id" : {
+          "type" : "string"
+        },
+        "consumer_item_num" : {
+          "type" : "string"
+        },
+        "quantity" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "weight" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "picked_item_description" : {
+          "type" : "string"
+        },
+        "sell_by_date" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "picked_by" : {
+          "type" : "string"
+        },
+        "unit_price" : {
+          "type" : "number"
+        },
+        "adjusted_price_ex_vat" : {
+          "type" : "number"
+        },
+        "adjusted_price" : {
+          "type" : "number"
+        },
+        "web_adjusted_price" : {
+          "type" : "number"
+        },
+        "vat_amount" : {
+          "type" : "number"
+        },
+        "picked_item_upcs" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/PickedItemUpcDto"
+          }
+        }
+      }
+    },
+    "PickedItemUpcDto" : {
+      "type" : "object",
+      "required" : [ "upc" ],
+      "properties" : {
+        "upc" : {
+          "type" : "string"
+        },
+        "unit_of_measurement" : {
+          "type" : "string"
+        },
+        "walmart_item_number" : {
+          "type" : "string"
+        },
+        "quantity" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "weight" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "store_unit_price" : {
+          "type" : "number"
+        }
+      }
+    },
+    "ReportMetaData" : {
+      "type" : "object",
+      "properties" : {
+        "sections" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Section"
+          }
+        },
+        "downloadUrlList" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "Section" : {
+      "type" : "object",
+      "properties" : {
+        "section_id" : {
+          "type" : "string"
+        },
+        "content_type" : {
+          "type" : "string"
+        },
+        "download_url" : {
+          "type" : "string"
+        }
+      }
+    },
+    "UberWebHookRequest" : {
+      "type" : "object",
+      "properties" : {
+        "event_id" : {
+          "type" : "string"
+        },
+        "event_time" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "event_type" : {
+          "type" : "string"
+        },
+        "meta" : {
+          "$ref" : "#/definitions/Meta"
+        },
+        "resource_href" : {
+          "type" : "string"
+        },
+        "downloadUrlList" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "report_type" : {
+          "type" : "string"
+        },
+        "report_metadata" : {
+          "$ref" : "#/definitions/ReportMetaData"
+        }
+      }
+    }
+  }
+}

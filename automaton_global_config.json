@@ -1,0 +1,73 @@
+{
+  "project_name": "asda-order-management-system-performance",
+  "slack": "asda-perf-notifs",
+  "email": [
+    "IEC-UKGR-FMS@email.wal-mart.com"
+  ],
+  "variables": {
+    "scmurl": "https://gecgithub01.walmart.com/ukgr/order-management-system.git",
+    "giturl": "https://gecgithub01.walmart.com/ukgr/order-management-system.git"
+  },
+  "flows": {
+    "marketplace_get_order_api_qa": {
+      "appurl": "http://order-management-service-app.qa.ukgr-oms.ukgrsps.prod.us.walmart.net",
+      "duration": "10",
+      "vu": "10",
+      "dc_load_distribution": {
+        "scus-dev-aperf1": 50,
+        "wus-dev-aperf1": 50
+      },
+      "config": "/perf/marketplace_get_order_api_qa.jmx"
+    },
+    "oms_get_order_api_qa": {
+      "appurl": "http://order-management-service-app.qa.ukgr-oms.ukgrsps.prod.us.walmart.net",
+      "duration": "10",
+      "vu": "10",
+      "dc_load_distribution": {
+        "scus-dev-aperf1": 50,
+        "wus-dev-aperf1": 50
+      },
+      "config": "/perf/oms_get_order_api_qa.jmx"
+    },
+    "fms_get_order_api_qa": {
+      "appurl": "http://order-management-service-app.qa.ukgr-oms.ukgrsps.prod.us.walmart.net",
+      "duration": "10",
+      "vu": "10",
+      "dc_load_distribution": {
+        "scus-dev-aperf1": 50,
+        "wus-dev-aperf1": 50
+      },
+      "config": "/perf/fms_get_order_api_qa.jmx"
+    },
+    "marketplace_get_order_api_prod": {
+      "appurl": "http://order-management-service-app.prod.ukgr-oms.ukgrsps.prod.us.walmart.net",
+      "duration": "10",
+      "vu": "10",
+      "dc_load_distribution": {
+        "scus-perf-a1": 50,
+        "wus-perf-a1": 50
+      },
+      "config": "/perf/marketplace_get_order_api_prod.jmx"
+    },
+    "oms_get_order_api_prod": {
+      "appurl": "http://order-management-service-app.prod.ukgr-oms.ukgrsps.prod.us.walmart.net",
+      "duration": "10",
+      "vu": "10",
+      "dc_load_distribution": {
+        "scus-perf-a1": 50,
+        "wus-perf-a1": 50
+      },
+      "config": "/perf/oms_get_order_api_prod.jmx"
+    },
+    "fms_get_order_api_prod": {
+      "appurl": "http://order-management-service-app.prod.ukgr-oms.ukgrsps.prod.us.walmart.net",
+      "duration": "10",
+      "vu": "10",
+      "dc_load_distribution": {
+        "scus-perf-a1": 50,
+        "wus-perf-a1": 50
+      },
+      "config": "/perf/fms_get_order_api_prod.jmx"
+    }
+  }
+}

@@ -1,0 +1,922 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+Schema Versioning approach:
+ ...Removed version from target namespace.
+...Change the number in the optional version attribute at
+the start of the XML schema. For example, in the code below one could change version=”2.2” to version=”2.3”
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+elementFormDefault="qualified"
+attributeFormDefault="unqualified"
+version="2.2">
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xml="http://www.w3.org/XML/1998/namespace"
+   elementFormDefault="qualified" attributeFormDefault="qualified" 
+   targetNamespace="http://www.xmlns.walmartstores.com/SupplyChain/CustomerOrderManagement/datatypes/UpdateOrderFulfillmentStatus/updateOrderPickedStatus/"
+   xmlns:pfx="http://www.xmlns.walmartstores.com/SupplyChain/CustomerOrderManagement/datatypes/UpdateOrderFulfillmentStatus/updateOrderPickedStatus/"
+   version="3.1" xmlns:hdr="http://www.xmlns.walmartstores.com/Header/datatypes/MessageHeader/1.4/"
+   xmlns:flt="http://www.xmlns.walmartstores.com/Fault/datatypes/MessageFault/1.0/">
+  <xsd:import namespace="http://www.xmlns.walmartstores.com/Header/datatypes/MessageHeader/1.4/"
+     schemaLocation="MessageHeader.xsd"/>
+  <xsd:import namespace="http://www.xmlns.walmartstores.com/Fault/datatypes/MessageFault/1.0/"
+     schemaLocation="MessageFault.xsd"/>
+  <xsd:simpleType name="alpha1">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="1"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="alpha2">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="2"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="alpha3">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="3"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="alpha10">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="10"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="alpha20">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="20"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="alpha25">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="25"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="alpha30">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="30"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="alpha36">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="36"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="alpha50">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="50"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="alpha80">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="80"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="alpha100">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="100"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="alpha255">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="255"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="alpha512">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="512"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="DispatchMethod">
+    <xsd:sequence>
+      <xsd:element name="code" type="pfx:alpha10" minOccurs="0"/>
+      <xsd:element name="name" type="pfx:alpha100" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="FulfillmentMethod">
+    <xsd:sequence>
+      <xsd:element name="code" type="pfx:alpha10" minOccurs="0"/>
+      <xsd:element name="name" type="pfx:alpha100" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Address">
+    <xsd:sequence>
+      <xsd:element name="addressLine1" type="pfx:alpha100" minOccurs="0"/>
+      <xsd:element name="addressLine2" type="pfx:alpha100" minOccurs="0"/>
+      <xsd:element name="addressLine3" type="pfx:alpha100" minOccurs="0"/>
+      <xsd:element name="addressLine4" type="pfx:alpha100" minOccurs="0"/>
+      <xsd:element name="addressLine5" type="pfx:alpha100" minOccurs="0"/>
+      <xsd:element name="city" type="pfx:alpha80" minOccurs="0"/>
+      <xsd:element name="county" type="pfx:alpha80" minOccurs="0"/>
+      <xsd:element name="state" type="pfx:alpha3" minOccurs="0"/>
+      <xsd:element name="zip" type="pfx:alpha20" minOccurs="0"/>
+      <xsd:element name="type" type="pfx:AddressType" minOccurs="0"/>
+      <xsd:element name="inCity" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="country" type="pfx:Country" minOccurs="0"/>
+      <xsd:element name="recipientName" type="pfx:alpha255" minOccurs="0"/>
+      <xsd:element name="isStandardized" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="postalCode" type="pfx:alpha20" minOccurs="0"/>
+      <xsd:element name="effectiveDateRange" type="pfx:DateRange" minOccurs="0"/>
+      <xsd:element name="district" type="pfx:alpha80" minOccurs="0"/>
+      <xsd:element name="memo" type="pfx:alpha255" minOccurs="0"/>
+      <xsd:element name="poBox" type="pfx:alpha10" minOccurs="0"/>
+      <xsd:element name="isDefault" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!--Added manually on 2016/03/22, Complex type designed by EA -->
+  <xsd:complexType name="Priority">
+    <xsd:sequence>
+      <xsd:element name="code" type="xsd:unsignedInt" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="description" type="pfx:alpha100" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType> 
+  <xsd:complexType name="AddressType">
+    <xsd:sequence>
+      <xsd:element name="code" type="pfx:alpha20" minOccurs="0"/>
+      <xsd:element name="description" type="pfx:alpha255" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Amount">
+    <xsd:sequence>
+      <xsd:element name="value">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:decimal">
+            <xsd:fractionDigits value="4"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="currency" type="pfx:Currency" minOccurs="0"/>
+      <xsd:element name="type" type="pfx:alpha10" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Associate">
+    <xsd:complexContent>
+      <xsd:extension base="pfx:Person">
+        <xsd:sequence>
+          <xsd:element name="discount" type="pfx:Discount" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="BaseDivision">
+    <xsd:sequence>
+      <xsd:element name="code" type="pfx:alpha10" minOccurs="0"/>
+      <xsd:element name="description" type="pfx:alpha100" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ChargeRate">
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:unsignedInt" minOccurs="0"/>
+      <xsd:element name="amount" type="pfx:Amount" minOccurs="0"/>
+      <xsd:element name="type" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="pfx:alpha20">
+            <xsd:enumeration value="FIXEDAMOUNT"/>
+            <xsd:enumeration value="PERCENT"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="chargeType" type="pfx:ChargeType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ChargeType">
+    <xsd:sequence>
+      <xsd:element name="number" type="xsd:unsignedInt" minOccurs="0"/>
+      <xsd:element name="name" type="pfx:alpha50" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TemperatureBand">
+      <xsd:sequence>
+         <xsd:element name="code" type="pfx:alpha20" minOccurs="0"/>
+         <xsd:element name="description" type="pfx:alpha80" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+  <xsd:complexType name="Container">
+    <xsd:sequence>
+      <xsd:element name="containerId" type="pfx:alpha36" minOccurs="0"/>
+      <xsd:element name="assignmentNumber" type="xsd:unsignedLong" minOccurs="0"/>
+      <xsd:element name="status" type="pfx:Status" minOccurs="0"/>
+      <xsd:element name="productQuantity" type="pfx:Quantity" minOccurs="0"/>
+      <xsd:element name="temperatureBand" type="pfx:TemperatureBand" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Cost">
+    <xsd:sequence>
+      <xsd:element name="amount" type="pfx:Amount"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Country">
+    <xsd:sequence>
+      <xsd:element name="code" type="pfx:alpha2" minOccurs="0"/>
+      <xsd:element name="name" type="pfx:alpha100" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Credentials">
+    <xsd:sequence>
+      <xsd:element name="userID" type="pfx:alpha20"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Currency">
+    <xsd:sequence>
+      <xsd:element name="code" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:minLength value="3"/>
+            <xsd:maxLength value="3"/>
+            <xsd:pattern value="[A-Z][A-Z][A-Z]"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="description" type="pfx:alpha80" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CustomerOrder">
+    <xsd:sequence>
+      <xsd:element name="orderHeader" type="pfx:OrderHeader"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DateRange">
+    <xsd:sequence>
+      <xsd:element name="start" type="xsd:date" minOccurs="0"/>
+      <xsd:element name="end" type="xsd:date" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!--Added manually on 2015/07/12-->
+  <xsd:complexType name="Department">
+    <xsd:sequence>
+      <xsd:element name="number" type="xsd:unsignedInt" minOccurs="0"/>
+      <xsd:element name="description" type="pfx:alpha80" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:complexType name="Discount">
+    <xsd:sequence>
+      <xsd:element name="amount" type="pfx:Amount" minOccurs="0"/>
+      <xsd:element name="type" type="pfx:alpha50" minOccurs="0"/>
+      <xsd:element name="discountAdjustment" type="pfx:DiscountAdjustment"
+         minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DiscountAdjustment">
+    <xsd:sequence>
+      <xsd:element name="amount" type="xsd:float" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Ethnicity">
+    <xsd:sequence>
+      <xsd:element name="code" type="pfx:alpha10" minOccurs="0"/>
+      <xsd:element name="description" type="pfx:alpha80" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Fee">
+    <xsd:sequence>
+      <xsd:element name="id" type="pfx:alpha100" minOccurs="0"/>
+      <xsd:element name="amount" type="pfx:Amount"/>
+      <xsd:element name="tax" type="pfx:Tax" minOccurs="0"/>
+      <xsd:element name="type" type="pfx:alpha50" minOccurs="0"/>
+      <xsd:element name="feeAdjustment" type="pfx:FeeAdjustment" minOccurs="0"/>
+      <xsd:element name="feeRate" type="pfx:ChargeRate" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="FeeAdjustment">
+    <xsd:sequence>
+      <xsd:element name="amount" type="pfx:Amount" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="FulfillmentOrder">
+    <xsd:sequence>
+      <xsd:element name="requestNumber" type="xsd:unsignedLong" minOccurs="0"/>
+      <xsd:element name="orderHeader" type="pfx:OrderHeader" minOccurs="0"/>
+      <xsd:element name="orderType" type="pfx:alpha20"/>
+      <xsd:element name="status" type="pfx:Status" minOccurs="0"/>
+      <xsd:element name="node" type="pfx:Node"/>
+      <xsd:element name="loadSequenceNumber" type="pfx:alpha10" minOccurs="0"/>
+      <xsd:element name="appliedTaxPercent" type="xsd:decimal" minOccurs="0"/>
+      <xsd:element name="totalTaxAmount" type="pfx:Amount" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Gender">
+    <xsd:sequence>
+      <xsd:element name="code" type="pfx:alpha10" minOccurs="0"/>
+      <xsd:element name="description" type="pfx:alpha80" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="GlobalTradeItem">
+    <xsd:sequence>
+      <xsd:element name="gtin" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:pattern value="([0-9])*"/>
+            <xsd:maxLength value="14"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Item">
+    <xsd:sequence>
+      <xsd:element name="number" type="xsd:unsignedInt"/>
+      <xsd:element name="cost" type="pfx:Cost" minOccurs="0"/>
+      <xsd:element name="handlingCost" type="pfx:Cost" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Language">
+    <xsd:sequence>
+      <xsd:element name="code" type="pfx:alpha10" minOccurs="0"/>
+      <xsd:element name="description" type="pfx:alpha80" minOccurs="0"/>
+      <xsd:element name="isPrimary" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Location">
+    <xsd:sequence>
+      <xsd:element name="countryCode" type="pfx:alpha2"/>
+      <xsd:element name="name" type="pfx:alpha100" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="MaritalStatus">
+    <xsd:sequence>
+      <xsd:element name="code" type="pfx:alpha10" minOccurs="0"/>
+      <xsd:element name="description" type="pfx:alpha80" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="MessageExtension">
+    <xsd:sequence>
+      <xsd:element name="name" type="pfx:alpha20"/>
+      <xsd:element name="value" type="pfx:alpha255"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Name">
+    <xsd:sequence>
+      <xsd:element name="first" type="pfx:alpha80" minOccurs="0"/>
+      <xsd:element name="middle" type="pfx:alpha80" minOccurs="0"/>
+      <xsd:element name="middleInitial" type="pfx:alpha1" minOccurs="0"/>
+      <xsd:element name="last" type="pfx:alpha80" minOccurs="0"/>
+      <xsd:element name="fullName" type="pfx:alpha255" minOccurs="0"/>
+      <xsd:element name="prefix" type="pfx:alpha50" minOccurs="0"/>
+      <xsd:element name="suffix" type="pfx:alpha50" minOccurs="0"/>
+      <xsd:element name="additionalLastName" type="pfx:alpha80" minOccurs="0"/>
+      <xsd:element name="initials" type="pfx:alpha30" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Nationality">
+    <xsd:sequence>
+      <xsd:element name="code" type="pfx:alpha25" minOccurs="0"/>
+      <xsd:element name="description" type="pfx:alpha100" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Node">
+    <xsd:sequence>
+      <xsd:element name="location" type="pfx:Location"/>
+      <xsd:element name="nodeID">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:unsignedInt">
+            <xsd:minInclusive value="1"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="type" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="HO"/>
+            <xsd:enumeration value="PMDC"/>
+            <xsd:enumeration value="RHO"/>
+            <xsd:enumeration value="apparelDC"/>
+            <xsd:enumeration value="dcStore"/>
+            <xsd:enumeration value="destination"/>
+            <xsd:enumeration value="dotcom"/>
+            <xsd:enumeration value="dsv"/>
+            <xsd:enumeration value="eCommerceRetail"/>
+            <xsd:enumeration value="eCommerceRetailSpecialty"/>
+            <xsd:enumeration value="eCommerceRetailWarehouseDC"/>
+            <xsd:enumeration value="eCommerceWholesale"/>
+            <xsd:enumeration value="ecomDC"/>
+            <xsd:enumeration value="gasStations"/>
+            <xsd:enumeration value="groceryDC"/>
+            <xsd:enumeration value="importsDC"/>
+            <xsd:enumeration value="importsWholesale"/>
+            <xsd:enumeration value="inboundTransportation"/>
+            <xsd:enumeration value="logisticsEliminations"/>
+            <xsd:enumeration value="pharmacyDC"/>
+            <xsd:enumeration value="regionalDC"/>
+            <xsd:enumeration value="retail"/>
+            <xsd:enumeration value="retailConnectivity"/>
+            <xsd:enumeration value="retailFinancialServices"/>
+            <xsd:enumeration value="retailOptical"/>
+            <xsd:enumeration value="retailPharmacy"/>
+            <xsd:enumeration value="retailPhotoCenter"/>
+            <xsd:enumeration value="retailShoes"/>
+            <xsd:enumeration value="retailSpecialty"/>
+            <xsd:enumeration value="retailSpecialtyWarehouse/DC"/>
+            <xsd:enumeration value="retailTLE"/>
+            <xsd:enumeration value="retailWarehouse/DC"/>
+            <xsd:enumeration value="returnCenter"/>
+            <xsd:enumeration value="samsclub"/>
+            <xsd:enumeration value="serviceBanking"/>
+            <xsd:enumeration value="serviceCenter"/>
+            <xsd:enumeration value="serviceParkingLot"/>
+            <xsd:enumeration value="serviceRestaurant"/>
+            <xsd:enumeration value="serviceRestaurantWarehouse/DC"/>
+            <xsd:enumeration value="store"/>
+            <xsd:enumeration value="supplier"/>
+            <xsd:enumeration value="transportation"/>
+            <xsd:enumeration value="transportationRetail"/>
+            <xsd:enumeration value="warehouse/DC"/>
+            <xsd:enumeration value="wholesale"/>
+            <xsd:enumeration value="wholesaleConnectivity"/>
+            <xsd:enumeration value="wholesaleOptical"/>
+            <xsd:enumeration value="wholesalePharmacy"/>
+            <xsd:enumeration value="wholesalePhotoCenter"/>
+            <xsd:enumeration value="wholesaleTMA"/>
+            <xsd:enumeration value="wholesaleWarehouse/DC"/>
+            <xsd:enumeration value="wpm"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="baseDivision" type="pfx:BaseDivision" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Offering">
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:unsignedInt" minOccurs="0"/>
+      <xsd:element name="description" type="pfx:alpha512" minOccurs="0"/>
+      <xsd:element name="secondaryDescription" type="pfx:alpha512" minOccurs="0"/>
+      <xsd:element name="plu" type="xsd:unsignedInt" minOccurs="0" maxOccurs="unbounded"/>
+      <!--Added manually on 2015/07/12, this is present in PFO under offering-->
+      <xsd:element name="department" type="pfx:Department" minOccurs="0"/>
+      <!--Added manually on 2015/07/12,this is present in PFO under offering-->
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="OrderHeader">
+    <xsd:sequence>
+      <xsd:element name="orderNumber" type="xsd:unsignedLong" minOccurs="0"/>
+      <xsd:element name="numberOfOrderLines" type="xsd:unsignedInt" minOccurs="0"/>
+      <xsd:element name="expirationDate" type="xsd:dateTime" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="OrderLine">
+    <xsd:sequence>
+      <xsd:element name="lineNumber" type="xsd:unsignedInt" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="status" type="pfx:Status" minOccurs="0"/>
+      <xsd:element name="orderLineQuantity" type="pfx:Quantity"/>
+      <xsd:element name="tax" type="pfx:Tax" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="fulfilledWeight" type="pfx:Weight" minOccurs="0"/>
+      <xsd:element name="fulfilledUnitPrice" type="pfx:Price" minOccurs="0"/>
+      <xsd:element name="appliedTaxPercent" type="xsd:decimal" minOccurs="0"/>
+      <xsd:element name="totalTaxAmount" type="pfx:Amount" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Package">
+    <xsd:sequence>
+      <xsd:element name="sequenceNumber" type="xsd:unsignedShort" minOccurs="0"/>
+      <xsd:element name="assignmentNumber" type="xsd:unsignedLong" minOccurs="0"/>
+      <xsd:element name="packageID" type="pfx:alpha30" minOccurs="0"/>
+      <xsd:element name="asnNumber" type="pfx:alpha25" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Person">
+    <xsd:sequence>
+      <xsd:element name="name" type="pfx:Name" minOccurs="0"/>
+      <xsd:element name="gender" type="pfx:Gender" minOccurs="0"/>
+      <xsd:element name="dateOfBirth" type="xsd:date" minOccurs="0"/>
+      <xsd:element name="annualIncome" type="pfx:Amount" minOccurs="0"/>
+      <xsd:element name="isVIP" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="monthlyRentOrMortgage" type="pfx:Amount" minOccurs="0"/>
+      <xsd:element name="address" type="pfx:Address" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="nationalID" type="pfx:alpha20" minOccurs="0"/>
+      <xsd:element name="federalDependents" type="xsd:unsignedShort" minOccurs="0"/>
+      <xsd:element name="stateDependents" type="xsd:unsignedShort" minOccurs="0"/>
+      <xsd:element name="taxMaritalStatus" type="pfx:MaritalStatus" minOccurs="0"/>
+      <xsd:element name="actualMaritalStatus" type="pfx:MaritalStatus" minOccurs="0"/>
+      <xsd:element name="preferredLanguage" type="pfx:Language" minOccurs="0"/>
+      <xsd:element name="ethnicity" type="pfx:Ethnicity" minOccurs="0"/>
+      <xsd:element name="birthName" type="pfx:Name" minOccurs="0"/>
+      <xsd:element name="preferredName" type="pfx:Name" minOccurs="0"/>
+      <xsd:element name="numberOfChildren" type="xsd:unsignedShort" minOccurs="0"/>
+      <xsd:element name="nationality" type="pfx:Nationality" minOccurs="0"/>
+      <xsd:element name="birthPlace" type="pfx:alpha100" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Price">
+    <xsd:sequence>
+      <xsd:element name="amount" type="pfx:Amount"/>
+      <xsd:element name="type" type="pfx:PriceType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PriceAdjustment">
+    <xsd:sequence>
+      <xsd:element name="amount" type="pfx:Amount" minOccurs="0"/>
+      <xsd:element name="description" type="pfx:alpha512" minOccurs="0"/>
+      <xsd:element name="purchaseQuantity" type="pfx:Quantity" minOccurs="0"/>
+      <xsd:element name="type" type="pfx:alpha10" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PriceType">
+    <xsd:sequence>
+      <xsd:element name="code" type="pfx:alpha10" minOccurs="0"/>
+      <xsd:element name="description" type="pfx:alpha80" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Product">
+    <xsd:complexContent>
+      <xsd:extension base="pfx:Offering">
+        <xsd:sequence/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="ProductOffering">
+    <xsd:sequence>
+      <xsd:element name="id" type="pfx:alpha36" minOccurs="0"/>
+      <xsd:element name="version" type="pfx:alpha10" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Quantity">
+    <xsd:sequence>
+      <xsd:element name="amount" type="xsd:decimal"/>
+      <xsd:element name="uom" type="pfx:alpha20" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ResponseMessage">
+    <xsd:sequence>
+      <xsd:element name="code" type="pfx:alpha20"/>
+      <xsd:element name="description" type="pfx:alpha512"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="SalesReceipt">
+    <xsd:sequence minOccurs="0">
+      <xsd:element name="salesTransaction" type="pfx:SalesTransaction" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="SalesTransaction">
+    <xsd:sequence>
+      <xsd:element name="transactionCode" type="pfx:alpha30" minOccurs="0"/>
+      <xsd:element name="taxBuckets" type="pfx:Tax" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="discount" type="pfx:Discount" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="salesTaxAmount" type="pfx:Tax" minOccurs="0"/>
+      <xsd:element name="subTotalAmount" type="pfx:Amount" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Status">
+    <xsd:sequence>
+      <xsd:element name="code" type="pfx:alpha10"/>
+      <xsd:element name="eventTime" type="xsd:dateTime"/>
+      <xsd:element name="description" type="pfx:alpha80" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="SubstitutionLine">
+    <xsd:sequence>
+      <xsd:element name="type">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="O"/>
+            <xsd:enumeration value="S"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <!--Changed on 2015/07/12:Made optional-->
+      <xsd:element name="quantity" type="pfx:Quantity" minOccurs="0" maxOccurs="1"/>
+      <!--Changed on 2015/07/12:Made optional-->
+      <xsd:element name="tax" type="pfx:Tax" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="fee" type="pfx:Fee" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="pickedBy" type="pfx:Credentials"/>
+      <xsd:element name="fulfilledUnitPrice" type="pfx:Price" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="appliedTaxPercent" type="xsd:decimal" minOccurs="0"/>
+      <xsd:element name="totalTaxAmount" type="pfx:Amount" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Tax">
+    <xsd:sequence>
+      <xsd:element name="amount" type="pfx:Amount"/>
+      <xsd:element name="type" type="pfx:alpha50" minOccurs="0"/>
+      <xsd:element name="discount" type="pfx:Discount" minOccurs="0"/>
+      <xsd:element name="taxAdjustment" type="pfx:TaxAdjustment" minOccurs="0"/>
+      <xsd:element name="taxRate" type="pfx:ChargeRate" minOccurs="0"/>
+      <xsd:element name="id" type="xsd:unsignedInt" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TaxAdjustment">
+    <xsd:sequence>
+      <xsd:element name="amount" type="pfx:Amount" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Weight">
+    <xsd:sequence>
+      <xsd:element name="amount" type="xsd:decimal" minOccurs="0"/>
+      <xsd:element name="uom" type="pfx:alpha20" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="UseBy">
+    <xsd:sequence>
+      <xsd:element name="useByDate" type="xsd:date" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="quantity" type="xsd:unsignedInt" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+	
+  <!--Added manually on 2015/07/12, Complex type designed by EA -->
+  <xsd:complexType name="CarrierBag">
+    <xsd:sequence>
+      <xsd:element name="carrierBagCount" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="isCarrierBagRequested" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="isCarrierBagCountRequired" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="carrierBagTotalAmount" type="xsd:decimal" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!--Added manually on 2015/07/12, Complex type designed by EA-->
+  <xsd:element name="Fault">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="hdr:MessageHeader"/>
+		<xsd:element ref="flt:MessageFault"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="UpdateOrderPickedStatusRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="hdr:MessageHeader"/>
+        <xsd:element name="MessageBody">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="customerOrder" maxOccurs="unbounded">
+                <xsd:complexType>
+                  <xsd:complexContent>
+                    <xsd:extension base="pfx:CustomerOrder">
+                      <xsd:sequence>
+                        <xsd:element name="fulfillmentOrders" maxOccurs="unbounded">
+                          <xsd:complexType>
+                            <xsd:complexContent>
+                              <xsd:extension base="pfx:FulfillmentOrder">
+                                <xsd:sequence>
+                      			  <xsd:element name="dispatchMethod"
+                                           type="pfx:DispatchMethod" minOccurs="0"/>                                        
+                                  <xsd:element name="fulfillmentMethod"
+                                           type="pfx:FulfillmentMethod"
+                                           minOccurs="0"/>	
+                                  <xsd:element name="orderLineInfo" maxOccurs="unbounded">
+                                    <xsd:complexType>
+                                      <xsd:sequence>
+                                        <xsd:element name="orderLine">
+                                          <xsd:complexType>
+                                            <xsd:complexContent>
+                                              <xsd:extension base="pfx:OrderLine">
+                                                <xsd:sequence>
+                                                  <xsd:element name="product"
+                                                     maxOccurs="unbounded">
+                                                    <xsd:complexType>
+                                                      <xsd:complexContent>
+                                                        <xsd:extension base="pfx:Product">
+                                                          <xsd:sequence>
+                                                            <xsd:element
+                                                               name="globalTradeItem"
+                                                               maxOccurs="unbounded">
+                                                              <xsd:complexType>
+                                                                <xsd:complexContent>
+                                                                  <xsd:extension
+                                                                     base="pfx:GlobalTradeItem">
+                                                                    <xsd:sequence>
+                                                                      <xsd:element
+                                                                         name="item"
+                                                                         type="pfx:Item"
+                                                                         minOccurs="0"
+                                                                         maxOccurs="unbounded"/>
+                                                                       <xsd:element name="useBy" type="pfx:UseBy" minOccurs="0" maxOccurs="unbounded"/>
+                                                                    </xsd:sequence>
+                                                                  </xsd:extension>
+                                                                </xsd:complexContent>
+                                                              </xsd:complexType>
+                                                            </xsd:element>
+                                                            <xsd:element
+                                                               name="originalUpc"
+                                                               minOccurs="0"
+                                                               maxOccurs="unbounded">
+                                                              <xsd:complexType>
+                                                                <xsd:complexContent>
+                                                                  <xsd:extension
+                                                                     base="pfx:GlobalTradeItem">
+                                                                    <xsd:sequence>
+                                                                      <xsd:element
+                                                                         name="item"
+                                                                         type="pfx:Item"
+                                                                         minOccurs="0"
+                                                                         maxOccurs="unbounded"/>
+                                                                       <xsd:element name="useBy" type="pfx:UseBy" minOccurs="0" maxOccurs="unbounded"/>  
+                                                                    </xsd:sequence>
+                                                                  </xsd:extension>
+                                                                </xsd:complexContent>
+                                                              </xsd:complexType>
+                                                            </xsd:element>
+                                                            <xsd:element
+                                                               name="price"
+                                                               minOccurs="0">
+                                                              <xsd:complexType>
+                                                                <xsd:complexContent>
+                                                                  <xsd:extension
+                                                                     base="pfx:Price">
+                                                                    <xsd:sequence>
+                                                                      <xsd:element
+                                                                         name="priceAdjustment"
+                                                                         type="pfx:PriceAdjustment"
+                                                                         minOccurs="0"
+                                                                         maxOccurs="unbounded"/>
+                                                                    </xsd:sequence>
+                                                                  </xsd:extension>
+                                                                </xsd:complexContent>
+                                                              </xsd:complexType>
+                                                            </xsd:element>
+                                                            <xsd:element
+                                                               name="weight"
+                                                               type="pfx:Weight"
+                                                               minOccurs="0"/>
+                                                            <xsd:element
+                                                               name="totalQuantityPrice"
+                                                               type="pfx:Price"
+                                                               minOccurs="0"/>
+                                                               <xsd:element
+                                                               name="pickedQuantity"
+                                                               type="pfx:Quantity"
+                                                               minOccurs="0" maxOccurs="1"/>                                                               
+                                                          </xsd:sequence>                                                          
+                                                        </xsd:extension>
+                                                      </xsd:complexContent>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                  <xsd:element name="price"
+                                                     minOccurs="0">
+                                                    <xsd:complexType>
+                                                      <xsd:complexContent>
+                                                        <xsd:extension base="pfx:Price">
+                                                          <xsd:sequence>
+                                                            <xsd:element
+                                                               name="priceAdjustment"
+                                                               type="pfx:PriceAdjustment"
+                                                               minOccurs="0"
+                                                               maxOccurs="unbounded"/>
+                                                          </xsd:sequence>
+                                                        </xsd:extension>
+                                                      </xsd:complexContent>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                  <xsd:element name="fee"
+                                                     type="pfx:Fee" minOccurs="0"
+                                                     maxOccurs="unbounded"/>
+                                                  <xsd:element name="actualPickedWeight"
+                                                     type="pfx:Weight" minOccurs="0"/>
+                                                </xsd:sequence>
+                                              </xsd:extension>
+                                            </xsd:complexContent>
+                                          </xsd:complexType>
+                                        </xsd:element>
+                                        <!--Changed on 2015/07/12:Made optional-->
+                                        <xsd:element name="pickedQuantity"
+                                           type="pfx:Quantity" minOccurs="0" maxOccurs="1"/>
+                                        <!--Changed on 2015/07/12:Made optional-->
+                                        <xsd:element name="substitutedQuantity"
+                                           type="pfx:Quantity" minOccurs="0"/>
+                                        <xsd:element name="substitutionInfo"
+                                           minOccurs="0" maxOccurs="unbounded">
+                                          <xsd:complexType>
+                                            <xsd:complexContent>
+                                              <xsd:extension base="pfx:SubstitutionLine">
+                                                <xsd:sequence>
+                                                  <xsd:element name="product"
+                                                     maxOccurs="unbounded">
+                                                    <xsd:complexType>
+                                                      <xsd:complexContent>
+                                                        <xsd:extension base="pfx:Offering">
+                                                          <xsd:sequence>
+                                                            <xsd:element
+                                                               name="globalTradeItem"
+                                                               maxOccurs="unbounded">
+                                                              <xsd:complexType>
+                                                                <xsd:complexContent>
+                                                                  <xsd:extension
+                                                                     base="pfx:GlobalTradeItem">
+                                                                    <xsd:sequence>
+                                                                      <xsd:element
+                                                                         name="item"
+                                                                         type="pfx:Item"
+                                                                         minOccurs="0"
+                                                                         maxOccurs="unbounded"/>
+                                                                       <xsd:element name="useBy" type="pfx:UseBy" minOccurs="0" maxOccurs="unbounded"/>  
+                                                                    </xsd:sequence>
+                                                                  </xsd:extension>
+                                                                </xsd:complexContent>
+                                                              </xsd:complexType>
+                                                            </xsd:element>
+                                                            <xsd:element
+                                                               name="originalUpc"
+                                                               minOccurs="0"
+                                                               maxOccurs="unbounded">
+                                                              <xsd:complexType>
+                                                                <xsd:complexContent>
+                                                                  <xsd:extension
+                                                                     base="pfx:GlobalTradeItem">
+                                                                    <xsd:sequence>
+                                                                      <xsd:element
+                                                                         name="item"
+                                                                         type="pfx:Item"
+                                                                         minOccurs="0"
+                                                                         maxOccurs="unbounded"/>
+                                                                      
+                                                                      <xsd:element name="useBy" type="pfx:UseBy" minOccurs="0" maxOccurs="unbounded"/>   
+																	</xsd:sequence>
+                                                                  </xsd:extension>
+                                                                </xsd:complexContent>
+                                                              </xsd:complexType>
+                                                            </xsd:element>
+                                                            <xsd:element
+                                                               name="price" minOccurs="0">
+                                                              <xsd:complexType>
+                                                                <xsd:complexContent>
+                                                                  <xsd:extension
+                                                                     base="pfx:Price">
+                                                                    <xsd:sequence>
+                                                                      <xsd:element
+                                                                         name="priceAdjustment"
+                                                                         type="pfx:PriceAdjustment"
+                                                                         minOccurs="0"
+                                                                         maxOccurs="unbounded"/>
+                                                                    </xsd:sequence>
+                                                                  </xsd:extension>
+                                                                </xsd:complexContent>
+                                                              </xsd:complexType>
+                                                            </xsd:element>
+                                                            <xsd:element
+                                                               name="weight"
+                                                               type="pfx:Weight"
+                                                               minOccurs="0"/>
+                                                            <xsd:element
+                                                               name="totalQuantityPrice"
+                                                               type="pfx:Price"
+                                                               minOccurs="0"/>
+                                                            <!--Added manually on 2015/07/12 -->
+                                                            <xsd:element
+                                                               name="pickedQuantity"
+                                                               type="pfx:Quantity"
+                                                               minOccurs="0" maxOccurs="1"/>                                                            
+                                                          </xsd:sequence>
+                                                        </xsd:extension>
+                                                      </xsd:complexContent>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                </xsd:sequence>
+                                              </xsd:extension>
+                                            </xsd:complexContent>
+                                          </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="pickedBy" type="pfx:Credentials"/>
+                                        <xsd:element name="container" type="pfx:Container"
+                                           minOccurs="0" maxOccurs="unbounded"/>
+                                        <xsd:element name="package" type="pfx:Package"
+                                           minOccurs="0"/>
+                                      </xsd:sequence>
+                                    </xsd:complexType>
+                                  </xsd:element>
+                                  <xsd:element name="lastChangedBy" type="pfx:Credentials" minOccurs="0" maxOccurs="1"/>
+                                  <xsd:element name="salesReceipt" minOccurs="0">
+                                    <xsd:complexType>
+                                      <xsd:complexContent>
+                                        <xsd:extension base="pfx:SalesReceipt">
+                                          <xsd:sequence>
+                                            <xsd:element name="fee" type="pfx:Fee"
+                                               minOccurs="0" maxOccurs="unbounded"/>
+                                          </xsd:sequence>
+                                        </xsd:extension>
+                                      </xsd:complexContent>
+                                    </xsd:complexType>
+                                  </xsd:element>
+                                  <!--Added manually on 2015/07/12-->
+                                  <xsd:element name="carrierBag" type="pfx:CarrierBag" minOccurs="0" maxOccurs="1"/>
+                                  <!--Added manually on 2015/07/12-->
+                                </xsd:sequence>
+                              </xsd:extension>
+                            </xsd:complexContent>
+                          </xsd:complexType>
+                        </xsd:element>
+                        <xsd:element name="originatingNode" type="pfx:Node"/>
+                      </xsd:sequence>
+                    </xsd:extension>
+                  </xsd:complexContent>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="MessageExtensions" type="pfx:MessageExtension"
+                 minOccurs="0" maxOccurs="5"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="UpdateOrderPickedStatusResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="hdr:MessageHeader"/>
+        <xsd:element name="MessageBody">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="responseMessage" type="pfx:ResponseMessage"/>
+              <xsd:element name="MessageExtensions" type="pfx:MessageExtension"
+                 minOccurs="0" maxOccurs="10"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

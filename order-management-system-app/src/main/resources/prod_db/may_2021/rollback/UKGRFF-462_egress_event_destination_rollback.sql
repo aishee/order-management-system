@@ -1,0 +1,1 @@
+alter table OMSCORE.OMSCORE.EGRESS_EVENTS drop column DESTINATION;

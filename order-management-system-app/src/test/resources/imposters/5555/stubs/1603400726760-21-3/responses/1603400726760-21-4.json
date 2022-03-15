@@ -1,0 +1,14 @@
+{
+  "proxy": {
+    "to": "http://iro-service-prod-private.walmart.com",
+    "_mode": "text",
+    "mode": "proxyOnce",
+    "predicateGenerators": [
+      {
+        "matches": {
+          "body": true
+        }
+      }
+    ]
+  }
+}

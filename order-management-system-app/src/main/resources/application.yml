@@ -1,0 +1,245 @@
+# Global properties
+spring:
+  jpa:
+    generate-ddl: false
+    show-sql: true
+  main:
+    allow-bean-definition-overriding: true
+
+runtime:
+  context:
+    system:
+      property:
+        override:
+          enabled: true
+    appName: order-management-system-app
+    environmentType: local
+    environment: local
+
+strati:
+  ccm:
+    configs: Resilience4jConfig
+  port: 8090
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      registerHealthIndicator: true
+      slidingWindowSize: ${Resilience4jConfig['circuitbreaker.default.slidingWindowSize']}
+      minimumNumberOfCalls: ${Resilience4jConfig['circuitbreaker.default.minimumNumberOfCalls']}
+      permittedNumberOfCallsInHalfOpenState: ${Resilience4jConfig['circuitbreaker.default.permittedNumberOfCallsInHalfOpenState']}
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      waitDurationInOpenState: 5s
+      failureRateThreshold: 50
+      eventConsumerBufferSize: 10
+      recordExceptions:
+        - com.walmart.oms.domain.error.exception.OMSThirdPartyException
+      ignoreExceptions:
+        - com.walmart.oms.domain.error.exception.OMSBadRequestException
+  instances:
+    IRO:
+      baseConfig: default
+    UBER_CART_CIRCUIT_BREAKER:
+      baseConfig: default
+    UBER_ORDER_UPDATE_CIRCUIT_BREAKER:
+      baseConfig: default
+    UBER_BATCH_CIRCUIT_BREAKER:
+      baseConfig: default
+    JUST_EATS_CIRCUIT_BREAKER:
+      baseConfig: default
+    TAX:
+      baseConfig: default
+    PYSIPYP:
+      baseConfig: default
+
+resilience4j.bulkhead:
+  configs:
+    default:
+      maxConcurrentCalls: ${Resilience4jConfig['bulkhead.default.maxConcurrentCalls']}
+      maxWaitDuration: 10ms
+  instances:
+    IRO:
+      baseConfig: default
+    UBER:
+      baseConfig: default
+    TAX:
+      baseConfig: default
+    PYSIPYP:
+      baseConfig: default
+    JUST_EATS:
+      baseConfig: default
+
+resilience4j.retry:
+  configs:
+    default:
+      max-retry-attempts: ${Resilience4jConfig['retry.default.maxRetryAttempts']}
+      wait-duration: ${Resilience4jConfig['retry.default.waitDuration']}
+      retry-exceptions:
+        - com.walmart.oms.domain.error.exception.OMSThirdPartyException
+        - com.walmart.fms.domain.error.exception.FMSThirdPartyException
+      ignoreExceptions:
+        - com.walmart.oms.domain.error.exception.OMSBadRequestException
+        - com.walmart.fms.domain.error.exception.FMSBadRequestException
+  instances:
+    IRO:
+      baseConfig: default
+    UBER:
+      baseConfig: default
+    JUST_EATS:
+      baseConfig: default
+    PYSIPYP:
+      baseConfig: default
+    TAX:
+      baseConfig: default
+    GIFUPDATECONSUMER:
+      baseConfig: default
+    GIFDELIVERYCONSUMER:
+      baseConfig: default
+    GIFCANCELCONSUMER:
+      baseConfig: default
+
+scm:
+  snapshot:
+    enabled: false
+  server:
+    access:
+      enabled: false
+
+server:
+  max-http-header-size: 16384
+  tomcat:
+    basedir: .
+    accesslog:
+      directory: /tmp/log/logmon/order-management-system
+      enabled: true
+      prefix: access-log
+      suffix: .log
+      pattern: '%t | resp_size=%b | remote_ip=%a | protocol=%H | uri=%U | method=%m | %q | status=%s |  resp_time=%D | localservername=%v | port=%p | thread_name=%I | session_id=%S | user_agent=%{User-Agent}i | xref_ip=%{True-Client-IP}i | end_user_ip=%{wm_client_ip}i | proforig=%{proforig}c | X-Uber-Signature=%{X-Uber-Signature}i '
+
+logging:
+  config: classpath:log4j2-spring.xml
+  level:
+    ROOT: INFO
+    org.springframework.web: info
+    com.walmart: INFO
+    io.starti: INFO
+
+log4j2:
+  contextSelector: org.apache.logging.log4j.core.async.AsyncLoggerContextSelector
+
+management:
+  endpoint:
+    prometheus:
+      enabled: true
+    health:
+      enabled: true
+    info:
+      enabled: true
+    env:
+      enabled: true
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: info,health,health-check,prometheus,env
+
+  metrics:
+    tags:
+      application: ${runtime.context.appName}
+      mms_source: non-wcnp
+      product_id: 824
+
+---
+
+# Local environment properties
+spring:
+  profiles: local
+
+logging:
+  config: classpath:log4j2-spring-local.xml
+
+runtime:
+  context:
+    environment: local
+    environmentType: local
+scm:
+  snapshot:
+    enabled: false
+  server:
+    access:
+      enabled: false
+
+---
+
+---
+# Local environment properties
+spring:
+  profiles: test
+
+logging:
+  config: classpath:log4j2-spring-test.xml
+
+runtime:
+  context:
+    environment: test
+    environmentType: test
+scm:
+  snapshot:
+    enabled: false
+  server:
+    access:
+      enabled: false
+
+---
+
+# qa environment properties
+spring:
+  profiles: qa
+
+runtime:
+  context:
+    environment: qa
+    environmentType: qa
+    appName: order-management-system-app
+scm:
+  snapshot:
+    enabled: true
+  server:
+    access:
+      enabled: true
+
+---
+
+# integrationtests environment properties
+spring:
+  profiles: integrationtests
+
+runtime:
+  context:
+    environment: integrationtests
+    environmentType: integrationtests
+    appName: order-management-system-app
+scm:
+  snapshot:
+    enabled: false
+  server:
+    access:
+      enabled: false
+
+---
+
+# PROD environment properties
+spring:
+  profiles: prod
+
+runtime:
+  context:
+    environment: prod
+    environmentType: prod
+    appName: order-management-system-app
+scm:
+  snapshot:
+    enabled: true
+  server:
+    access:
+      enabled: true

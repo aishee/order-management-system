@@ -1,0 +1,2 @@
+drop table OMSCORE.EGRESS_EVENTS
+go

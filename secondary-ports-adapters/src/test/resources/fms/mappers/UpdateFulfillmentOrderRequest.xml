@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:UpdateFulfillmentOrderRequest xmlns="http://www.xmlns.walmartstores.com/Header/datatypes/MessageHeader/1.4/" xmlns:ns2="http://www.xmlns.walmartstores.com/SupplyChain/FulfillmentManagement/datatypes/UpdateFulfillmentOrder/">
+  <MessageHeader>
+    <SubId>SUB-ASDA-UFO-V1</SubId>
+    <CnsmrId>CON-ASDA-HOS-V1</CnsmrId>
+    <SrvcNm>UpdateFulfillmentOrder.DirectCancel</SrvcNm>
+    <TranId>123456789</TranId>
+    <Version>2.5</Version>
+  </MessageHeader>
+  <ns2:MessageBody>
+    <ns2:customerOrder>
+      <ns2:orderHeader>
+        <ns2:orderNumber>123456789</ns2:orderNumber>
+      </ns2:orderHeader>
+      <ns2:fulfillmentOrder>
+        <ns2:orderHeader>
+          <ns2:orderNumber>123456789</ns2:orderNumber>
+        </ns2:orderHeader>
+        <ns2:orderType>GRP</ns2:orderType>
+        <ns2:status>
+          <ns2:code>CAN</ns2:code>
+          <ns2:eventTime>2021-08-07T10:12:01.315Z</ns2:eventTime>
+          <ns2:description>CANCELLED</ns2:description>
+        </ns2:status>
+        <ns2:node>
+          <ns2:location>
+            <ns2:countryCode>GB</ns2:countryCode>
+          </ns2:location>
+          <ns2:nodeID>5755</ns2:nodeID>
+        </ns2:node>
+      </ns2:fulfillmentOrder>
+      <ns2:originatingNode>
+        <ns2:location>
+          <ns2:countryCode>GB</ns2:countryCode>
+        </ns2:location>
+        <ns2:nodeID>4715</ns2:nodeID>
+      </ns2:originatingNode>
+    </ns2:customerOrder>
+  </ns2:MessageBody>
+</ns2:UpdateFulfillmentOrderRequest>

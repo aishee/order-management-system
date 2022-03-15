@@ -1,0 +1,271 @@
+groups:
+  - name: order-management-system-app-alerts
+    rules:
+      - alert: omsapp -QA High Heap Memory Usage
+        annotations:
+          message: QA-High Heap(>80%) usage in one of the OMS App instances, datacenter {{ $labels.datacenter }}, node {{ $labels.node }}, instance {{ $labels.instance }}
+        expr: (sum(jvm_memory_used_bytes{mms_source="non-wcnp",product_id="824",application="order-management-system-app", area="heap"}) by (instance) / sum(jvm_memory_max_bytes{mms_source="non-wcnp",product_id="824",application="order-management-system-app", area="heap"}) by (instance)) > 0.8
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - High Non Heap Memory Usage
+        annotations:
+          message: QA-High Non Heap(>80%) usage in one of the OMS App instances, datacenter {{ $labels.datacenter }}, node {{ $labels.node }}, instance {{ $labels.instance }}
+        expr: (sum(jvm_memory_used_bytes{mms_source="non-wcnp",product_id="824",application="order-management-system-app", area="nonheap"}) by (instance) / sum(jvm_memory_max_bytes{mms_source="non-wcnp",product_id="824",application="order-management-system-app", area="nonheap"}) by (instance)) > 0.8
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - Observed consistent circuit openings in last 2 min
+        annotations:
+          message: QA-Consistent circuit openings are happening for last 2 min
+        expr: sum(rate(circuit_opened_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824"}[2m])) > 0
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - Secondary Port exceptions are increasing (may result in 500 statuses)
+        annotations:
+          message: QA-OMS App is receiving more than 2 exceptions/sec from  Thirdparty APIs on average
+        expr: sum(rate(secondary_port_exception_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824"}[2m])) >0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - IRO Api exceptions are increasing (may result in 500 statuses)
+        annotations:
+          message: QA-OMS App is receiving more than 2 exceptions/sec from Catalog API on average
+        expr: sum(rate(secondary_port_exception_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824",type="IROHttpWebClient_retrieveCatalogData"}[2m])) >0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - Tax Service Api exceptions are increasing (may result in 500 statuses)
+        annotations:
+          message: QA-OMS App is receiving more than 2 exceptions/sec from Tax Service API on average
+        expr: sum(rate(secondary_port_exception_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824",type="CalculateTaxHttpWebClient_executeTaxCall"}[2m])) >0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - PYSIPYP Record Sale Api exceptions are increasing (may result in 500 statuses)
+        annotations:
+          message: QA-OMS App is receiving more than 2 exceptions/sec from PYSIPYP Record Sale API on average
+        expr: sum(rate(secondary_port_exception_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824",type="PYSIPYPWebClient_getPriceData"}[2m])) >0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - PYSIPYP Reverse Sale Api exceptions are increasing (may result in 500 statuses)
+        annotations:
+          message: QA-OMS App is receiving more than 2 exceptions/sec from PYSIPYP Reverse Sale API on average
+        expr: sum(rate(secondary_port_exception_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824",type="PYSIPYPWebClient_reverseSale"}[2m])) >0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - Business Report Upload exceptions are increasing (may result in 500 statuses)
+        annotations:
+          message: QA-OMS App is receiving more than 2 exceptions/sec while uploading Business Reports to Informatica server
+        expr: sum(rate(secondary_port_exception_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824",type="ReportServiceImpl_uploadReport"}[2m])) >0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - IRO Api exceptions are increasing (may result in 500 statuses)
+        annotations:
+          message: QA-OMS App is receiving more than 2 exceptions/sec from Catalog API on average
+        expr: sum(rate(iro_exception_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824"}[2m])) >0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - Tax Service Api exceptions are increasing (may result in 500 statuses)
+        annotations:
+          message: QA-OMS App is receiving more than 2 exceptions/sec from Tax Service API on average
+        expr: sum(rate(tax_exception_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824"}[2m])) >0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - PYSIPYP Api exceptions are increasing (may result in 500 statuses)
+        annotations:
+          message: QA-OMS App is receiving more than 2 exceptions/sec from PYSIPYP Record Sale API on average
+        expr: sum(rate(pysipyp_exception_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824"}[2m])) >0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - Business Report Upload exceptions are increasing (may result in 500 statuses)
+        annotations:
+          message: QA-OMS App is receiving more than 2 exceptions/sec while uploading Business Reports to Informatica server
+        expr: sum(rate(business_report_exception_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824"}[2m])) >0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - Uber Web-hook exceptions are increasing (may result in 500 statuses)
+        annotations:
+          message: QA-OMS App is receiving more than 2 exceptions/sec from Uber Web-hook on average
+        expr: sum(rate(uber_web_hook_exception_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824"}[2m])) >0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - JustEat Web-hook exceptions are increasing (may result in 500 statuses)
+        annotations:
+          message: QA-OMS App is receiving more than 2 exceptions/sec from JustEat Web-hook on average
+        expr: sum(rate(just_eat_web_hook_exception_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824"}[2m])) >0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - QA-APIs are responding with more than 24(500 statuses)/min on average
+        annotations:
+          message: QA-OMS App is receiving more than 2 exceptions/sec from Thirdparty APIs on average
+        expr: topk(100, sum by(status) (rate(primary_port_invocation_seconds_count{application="order-management-system-app",mms_source="non-wcnp",product_id="824",isSuccess="false",status="500"}[2m]))) > 0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsApp - QA-OMS Inbound Asynchronus Order Creation Exceptions are Increasing (may result in 500 statuses)
+        annotations:
+          message: QA-OMS App is receiving more than 2 exceptions/sec from Thirdparty APIs on average
+        expr: sum(rate(oms_inbound_exception_counter_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824"}[2m])) > 0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsApp - QA-FMS Inbound Asynchronus Order Creation Exceptions are Increasing (may result in 500 statuses)
+        annotations:
+          message: QA-OMS App is receiving more than 2 exceptions/sec from Thirdparty APIs on average
+        expr: sum(rate(fms_inbound_exception_counter_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824"}[2m])) > 0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - QA-Uber Accept Order exceptions are increasing
+        annotations:
+          message: QA-OMS App rate of receiving exceptions from Thirdparty UBER ACCEPT ORDER API is greater than 0.004
+        expr: sum(rate(uber_exception_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824",type="uber_accept_order"}[2m])) > 0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - QA-Uber Cancel Order exceptions are increasing
+        annotations:
+          message: QA-OMS App rate of receiving exceptions from Thirdparty UBER CANCEL ORDER API is greater than 0.004
+        expr: sum(rate(uber_exception_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824",type="uber_cancel_order",exceptionType="OMSThirdPartyException"}[2m])) > 0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - QA-Uber Get Report exceptions are increasing
+        annotations:
+          message: QA-OMS App rate of receiving exceptions from Thirdparty UBER GET REPORT API is greater than 0.004
+        expr: sum(rate(uber_exception_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824",type="uber_get_report"}[2m])) > 0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - QA-Uber Get Stores exceptions are increasing
+        annotations:
+          message: QA-OMS App rate of receiving exceptions from Thirdparty UBER GET STORES API is greater than 0.004
+        expr: sum(rate(uber_exception_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824",type="uber_get_stores"}[2m])) > 0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - QA-Uber Update Item exceptions are increasing
+        annotations:
+          message: QA-OMS App rate of receiving exceptions from Thirdparty UBER UPDATE ITEM API is greater than 0.004
+        expr: sum(rate(uber_exception_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824",type="uber_update_item"}[2m])) > 0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - QA-Uber Patch Cart exceptions are increasing
+        annotations:
+          message: QA-OMS App rate of receiving exceptions from Thirdparty UBER PATCH CART API is greater than 0.004
+        expr: sum(rate(uber_exception_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824",type="uber_patch_cart",exceptionType="OMSThirdPartyException"}[2m])) > 0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - QA-Uber Deny Order exceptions are increasing
+        annotations:
+          message: QA-OMS App rate of receiving exceptions from Thirdparty UBER DENY ORDER API is greater than 0.004
+        expr: sum(rate(uber_exception_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824",type="uber_deny_order"}[2m])) > 0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - QA-Uber Get Order exceptions are increasing
+        annotations:
+          message: QA-OMS App rate of receiving exceptions from Thirdparty UBER GET ORDER API is greater than 0.004
+        expr: sum(rate(uber_exception_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824",type="uber_get_order"}[2m])) > 0.004
+        for: 2m
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
+
+      - alert: omsapp - QA-OMS data purge Job failed
+        annotations:
+          message: QA-OMS App rate of purge exceptions are increasing
+        expr: sum(oms_purge_exception_counter_total{application="order-management-system-app",mms_source="non-wcnp",product_id="824",type="oms_purge"}) > 0
+        labels:
+          severity: critical
+          alert_team: asda_groceries_order_management_system_app
+          mms_slack_channel: asda-oms-app-qa-alerts
